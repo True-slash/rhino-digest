@@ -21,39 +21,39 @@ GOOGLE_NEWS_FEEDS = {
     "Ride-hailing EN": (
         "https://news.google.com/rss/search?"
         "q=ride-hailing+OR+ride-sharing+OR+Uber+OR+Lyft+OR+Bolt+OR+Grab+OR+DiDi+OR+inDrive+OR+Yango+OR+99+OR+Yandex+Go+OR+Cabify+OR+Freenow+OR+Gett+OR+Ola+OR+Waymo+OR+Blacklane+OR+Wheely+OR+Moove+OR+Kovi+OR+Jet+OR+Gettransfer+OR+Rapido+OR+Revel"
-        "&hl=en-US&gl=US&ceid=US:en"
+        "+when:24h&hl=en-US&gl=US&ceid=US:en"
     ),
     "Mobility tech EN": (
         "https://news.google.com/rss/search?"
         "q=robotaxi+OR+autonomous+vehicle+OR+mobility-as-a-service+OR+micro-mobility"
-        "&hl=en-US&gl=US&ceid=US:en"
+        "+when:24h&hl=en-US&gl=US&ceid=US:en"
     ),
     "EV fleet EN": (
         "https://news.google.com/rss/search?"
         "q=electric+vehicle+fleet+OR+EV+ride-hailing+OR+EV+taxi"
-        "&hl=en-US&gl=US&ceid=US:en"
+        "+when:24h&hl=en-US&gl=US&ceid=US:en"
     ),
 
     # Portuguese — Brazil mobility, startups, fintech
     "Mobilidade BR": (
         "https://news.google.com/rss/search?"
         "q=Uber+OR+99+OR+inDrive+OR+mobilidade+urbana+OR+transporte+por+aplicativo"
-        "&hl=pt-BR&gl=BR&ceid=BR:pt-419"
+        "+when:24h&hl=pt-BR&gl=BR&ceid=BR:pt-419"
     ),
     "Startups BR": (
         "https://news.google.com/rss/search?"
         "q=startup+OR+fintech+OR+venture+capital+Brasil"
-        "&hl=pt-BR&gl=BR&ceid=BR:pt-419"
+        "+when:24h&hl=pt-BR&gl=BR&ceid=BR:pt-419"
     ),
     "Security BR": (
     "https://news.google.com/rss/search?"
     "q=segurança+veicular+OR+carro+blindado+OR+armored+vehicle"
-    "&hl=pt-BR&gl=BR&ceid=BR:pt-419"
+    "+when:24h&hl=pt-BR&gl=BR&ceid=BR:pt-419"
     ),
     "Regulação BR": (
         "https://news.google.com/rss/search?"
         "q=regulação+transporte+aplicativo+OR+táxi+regulamentação+Brasil"
-        "&hl=pt-BR&gl=BR&ceid=BR:pt-419"
+        "+when:24h&hl=pt-BR&gl=BR&ceid=BR:pt-419"
     ),
 }
 
