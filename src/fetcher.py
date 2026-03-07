@@ -42,7 +42,7 @@ GOOGLE_NEWS_FEEDS = {
     ),
     "Startups BR": (
         "https://news.google.com/rss/search?"
-        "q=startup+OR+fintech+OR+venture+capital+Brasil"
+        "q=startup+Brasil+OR+venture+capital+Brasil+OR+VC+Brasil"
         "+when:24h&hl=pt-BR&gl=BR&ceid=BR:pt-419"
     ),
     "Security BR": (
