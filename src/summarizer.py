@@ -229,11 +229,6 @@ class LLMSummarizer:
                     if art["relevance_score"] >= min_score:
                         all_scored.append(art)
 
-            # Early exit: if we already have enough high-scoring articles
-            if len(all_scored) >= max_articles * 2:
-                log.info(f"Early exit: found {len(all_scored)} relevant articles after {batch_num} batches")
-                break
-
         # Sort by relevance, take top N
         all_scored.sort(key=lambda a: a["relevance_score"], reverse=True)
         return all_scored[:max_articles]

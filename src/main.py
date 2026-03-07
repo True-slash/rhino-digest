@@ -65,6 +65,8 @@ async def run():
     # 3. Keyword pre-filter (free, fast — removes obvious noise)
     kw_filter = KeywordFilter()
     articles = kw_filter.filter(articles)
+    # Sort by keyword score so best articles go to LLM first
+    articles.sort(key=lambda a: a.get("keyword_score", 0), reverse=True)
     log.info(f"   {len(articles)} after keyword pre-filter")
 
     # 4. LLM relevance scoring & summarization
