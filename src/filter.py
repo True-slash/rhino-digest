@@ -51,7 +51,7 @@ NEGATIVE_KEYWORDS = [
 ]
 
 # Minimum score to pass pre-filter
-MIN_KEYWORD_SCORE = 4
+MIN_KEYWORD_SCORE = 3
 
 
 class KeywordFilter:
