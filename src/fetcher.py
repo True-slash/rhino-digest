@@ -25,7 +25,7 @@ GOOGLE_NEWS_FEEDS = {
     ),
     "Mobility tech EN": (
         "https://news.google.com/rss/search?"
-        "q=robotaxi+OR+autonomous+vehicle+OR+mobility-as-a-service+OR+micro-mobility"
+        "q=robotaxi+OR+autonomous+vehicle+OR+mobility+OR+mobility-as-a-service+OR+micro-mobility"
         "+when:24h&hl=en-US&gl=US&ceid=US:en"
     ),
     "EV fleet EN": (
@@ -37,7 +37,7 @@ GOOGLE_NEWS_FEEDS = {
     # Portuguese — Brazil mobility, startups, fintech
     "Mobilidade BR": (
         "https://news.google.com/rss/search?"
-        "q=Uber+OR+99+OR+inDrive+OR+mobilidade+urbana+OR+transporte+por+aplicativo"
+        "q=Uber+OR+99+OR+inDrive+OR+mobilidade+OR+mobilidade+urbana+OR+transporte+por+aplicativo"
         "+when:24h&hl=pt-BR&gl=BR&ceid=BR:pt-419"
     ),
     "Startups BR": (
