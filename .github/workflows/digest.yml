@@ -1,0 +1,47 @@
+name: Rhino Digest
+
+on:
+  schedule:
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get latest code
+        run: |
+          git fetch origin main
+          git checkout origin/main -- src/ data/ requirements.txt
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install -r requirements.txt
+
+      - name: Run digest
+        working-directory: src
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_IDS: ${{ secrets.TELEGRAM_CHAT_IDS }}
+          LLM_PROVIDER: ${{ secrets.LLM_PROVIDER }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+          STATE_FILE: ../data/seen_articles.json
+        run: python main.py
+
+      - name: Save state
+        run: |
+          git config user.name "Rhino Bot"
+          git config user.email "bot@rhino.app"
+          git stash
+          git checkout origin/main -- .
+          git stash pop || true
+          git add data/seen_articles.json
+          git diff --cached --quiet || git commit -m "chore: update seen articles state"
+          git push origin HEAD:main || true
