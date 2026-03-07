@@ -65,6 +65,7 @@ DIRECT_FEEDS = {
     "Exame": "https://exame.com/feed/",
     "Bloomberg Markets": "https://feeds.bloomberg.com/markets/news.rss",
     "Bloomberg Tech": "https://feeds.bloomberg.com/technology/news.rss",
+    "The Verge": "https://www.theverge.com/rss/index.xml",
 }
 
 # Maximum age of articles to consider (hours)
