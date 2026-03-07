@@ -62,8 +62,9 @@ class Deduplicator:
         return False
 
     def filter_new(self, articles: list[dict]) -> list[dict]:
-        """Return only articles not previously seen."""
+        """Return only articles not previously seen, and deduplicate within batch."""
         new = []
+        batch_titles = []
         for art in articles:
             url = art.get("url", "")
             title = art.get("title", "")
@@ -73,6 +74,17 @@ class Deduplicator:
             if self._is_title_duplicate(title):
                 continue
 
+            # Also deduplicate within current batch
+            norm = self._normalize_title(title)
+            is_batch_dup = False
+            for seen_t in batch_titles:
+                if SequenceMatcher(None, norm, seen_t).ratio() >= TITLE_SIMILARITY_THRESHOLD:
+                    is_batch_dup = True
+                    break
+            if is_batch_dup:
+                continue
+
+            batch_titles.append(norm)
             new.append(art)
         return new
 
