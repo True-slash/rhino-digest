@@ -6,23 +6,31 @@ State stored as JSON (works with GitHub Actions commit-back pattern).
 import json
 import logging
 import os
+import re
 from datetime import datetime, timezone, timedelta
 from difflib import SequenceMatcher
 from pathlib import Path
 
 log = logging.getLogger(__name__)
 
-# Articles older than this are pruned from state
 RETENTION_DAYS = 30
-# Fuzzy title match threshold (0.0–1.0)
-TITLE_SIMILARITY_THRESHOLD = 0.82
+TITLE_SIMILARITY_THRESHOLD = 0.65
+
+
+def _clean_title(title: str) -> str:
+    """Normalize title for comparison: lowercase, remove source suffix, punctuation."""
+    title = title.lower().strip()
+    title = re.sub(r'\s*[-–—|]\s*[^-–—|]+$', '', title)
+    title = re.sub(r'[^\w\s]', '', title)
+    title = re.sub(r'\s+', ' ', title).strip()
+    return title
 
 
 class Deduplicator:
     def __init__(self, state_file: str = "data/seen_articles.json"):
         self.state_file = state_file
-        self.seen: dict[str, str] = {}      # url -> iso_date
-        self.seen_titles: dict[str, str] = {}  # normalized_title -> url
+        self.seen: dict[str, str] = {}
+        self.seen_titles: dict[str, str] = {}
         self._load()
 
     def _load(self):
@@ -42,7 +50,6 @@ class Deduplicator:
             log.info("No state file found — first run")
 
     def _prune(self):
-        """Remove entries older than RETENTION_DAYS."""
         cutoff = (datetime.now(timezone.utc) - timedelta(days=RETENTION_DAYS)).isoformat()
         old_count = len(self.seen)
         self.seen = {url: dt for url, dt in self.seen.items() if dt >= cutoff}
@@ -50,14 +57,12 @@ class Deduplicator:
         if pruned:
             log.info(f"Pruned {pruned} old entries from state")
 
-    @staticmethod
-    def _normalize_title(title: str) -> str:
-        return title.lower().strip()
-
-    def _is_title_duplicate(self, title: str) -> bool:
-        norm = self._normalize_title(title)
-        for seen_title in self.seen_titles:
-            if SequenceMatcher(None, norm, seen_title).ratio() >= TITLE_SIMILARITY_THRESHOLD:
+    def _is_title_similar(self, title: str, title_list: list[str]) -> bool:
+        clean = _clean_title(title)
+        if len(clean) < 10:
+            return False
+        for seen_t in title_list:
+            if SequenceMatcher(None, clean, seen_t).ratio() >= TITLE_SIMILARITY_THRESHOLD:
                 return True
         return False
 
@@ -71,25 +76,19 @@ class Deduplicator:
 
             if url in self.seen:
                 continue
-            if self._is_title_duplicate(title):
+
+            seen_titles_list = list(self.seen_titles.keys())
+            if self._is_title_similar(title, seen_titles_list):
                 continue
 
-            # Also deduplicate within current batch
-            norm = self._normalize_title(title)
-            is_batch_dup = False
-            for seen_t in batch_titles:
-                if SequenceMatcher(None, norm, seen_t).ratio() >= TITLE_SIMILARITY_THRESHOLD:
-                    is_batch_dup = True
-                    break
-            if is_batch_dup:
+            if self._is_title_similar(title, batch_titles):
                 continue
 
-            batch_titles.append(norm)
+            batch_titles.append(_clean_title(title))
             new.append(art)
         return new
 
     def mark_seen(self, articles: list[dict]):
-        """Add articles to seen set."""
         now = datetime.now(timezone.utc).isoformat()
         for art in articles:
             url = art.get("url", "")
@@ -97,10 +96,9 @@ class Deduplicator:
             if url:
                 self.seen[url] = now
             if title:
-                self.seen_titles[self._normalize_title(title)] = url
+                self.seen_titles[_clean_title(title)] = url
 
     def save(self):
-        """Persist state to JSON."""
         Path(self.state_file).parent.mkdir(parents=True, exist_ok=True)
         with open(self.state_file, "w") as f:
             json.dump({
