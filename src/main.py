@@ -88,8 +88,7 @@ async def run():
         articles = articles[: cfg["max_articles_in_digest"]]
 
     if not articles:
-        log.info("No relevant articles today. Sending short notice.")
-        articles = []
+        log.info("No relevant articles today.")
 
     # 5. Format
     digest_messages = format_digest(articles)
