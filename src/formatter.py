@@ -98,7 +98,7 @@ def format_digest(articles: list[dict]) -> list[str]:
 
     for category, arts in grouped.items():
         section = f"\n{category}\n\n"
-        for art in arts[:3]:
+        for art in arts[:5]:
             title = _escape_html(art.get("title", "Untitled"))
             url = _escape_url(art.get("url", ""))
             summary = art.get("summary", "")
