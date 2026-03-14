@@ -69,7 +69,7 @@ DIRECT_FEEDS = {
 }
 
 # Maximum age of articles to consider (hours)
-MAX_AGE_HOURS = 28
+MAX_AGE_HOURS = 25
 
 
 @dataclass
