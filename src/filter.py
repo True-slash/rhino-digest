@@ -16,13 +16,12 @@ HIGH_KEYWORDS = [
     "táxi por aplicativo", "transporte por aplicativo",
     "mobilidade urbana", "urban mobility",
     "armored vehicle", "blindado", "segurança veicular",
-    "armored taxi", "táxi blindado",
+    "armored taxi", "táxi blindado", "uber", "lyft", "didi", "indrive", "99",
 ]
 
 # Weight 2: Key companies & direct competitors
 MEDIUM_KEYWORDS = [
-    "uber", "lyft", "didi", "grab", "bolt", "indrive", "99",
-    "cabify", "freenow", "gett", "ola", "yandex go",
+    "grab", "bolt", "cabify", "freenow", "gett", "ola", "yandex go",
     "waymo", "robotaxi", "autonomous taxi",
     "yango", "blacklane", "wheely", "moove", "kovi", "jet", 
     "gettransfer", "rapido", "revel", "armis mobi", "bunker driver", 
