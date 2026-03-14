@@ -161,11 +161,25 @@ async def fetch_all_feeds() -> list[dict]:
 
         results = await asyncio.gather(*tasks)
 
-    # Flatten and convert to dicts
+    # Flatten, filter by age, and convert to dicts
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=MAX_AGE_HOURS)
     all_articles = []
+    skipped_old = 0
     for batch in results:
         for article in batch:
+            # Filter by publish date if available
+            if article.published:
+                try:
+                    from email.utils import parsedate_to_datetime
+                    pub_dt = parsedate_to_datetime(article.published)
+                    if pub_dt < cutoff:
+                        skipped_old += 1
+                        continue
+                except Exception:
+                    pass  # If date parsing fails, include the article
             all_articles.append(article.to_dict())
 
+    if skipped_old:
+        log.info(f"Skipped {skipped_old} articles older than {MAX_AGE_HOURS}h")
     log.info(f"Fetched {len(all_articles)} articles from {len(tasks)} feeds")
     return all_articles
