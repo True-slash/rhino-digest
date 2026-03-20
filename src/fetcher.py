@@ -33,6 +33,11 @@ GOOGLE_NEWS_FEEDS = {
         "q=electric+vehicle+fleet+OR+EV+ride-hailing+OR+EV+taxi"
         "+when:24h&hl=en-US&gl=US&ceid=US:en"
     ),
+    "LinkedIn": (
+        "https://news.google.com/rss/search?"
+        "q=site:linkedin.com+ride-hailing+OR+mobility+OR+fundraising+OR+Peter+Walker+OR+Uber+OR+99"
+        "+when:24h&hl=en-US&gl=US&ceid=US:en"
+    ),
 
     # Portuguese — Brazil mobility, startups, fintech
     "Mobilidade BR": (
@@ -46,9 +51,9 @@ GOOGLE_NEWS_FEEDS = {
         "+when:24h&hl=pt-BR&gl=BR&ceid=BR:pt-419"
     ),
     "Security BR": (
-    "https://news.google.com/rss/search?"
-    "q=segurança+veicular+OR+carro+blindado+OR+armored+vehicle"
-    "+when:24h&hl=pt-BR&gl=BR&ceid=BR:pt-419"
+        "https://news.google.com/rss/search?"
+        "q=segurança+veicular+OR+carro+blindado+OR+armored+vehicle"
+        "+when:24h&hl=pt-BR&gl=BR&ceid=BR:pt-419"
     ),
     "Regulação BR": (
         "https://news.google.com/rss/search?"
