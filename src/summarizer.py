@@ -1,5 +1,5 @@
 """
-LLM-powered relevance scoring and summarization.
+LLM-powered relevance scoring, summarization, and daily brief generation.
 Supports multiple providers: Groq (free), Anthropic, Google Gemini.
 Batches articles to minimize API calls.
 """
@@ -48,6 +48,26 @@ For each article respond with ONLY a JSON array. Each element:
 
 Return ONLY valid JSON, no markdown fences, no explanation."""
 
+DAILY_BRIEF_PROMPT = """You are a strategic analyst for Rhino, an armored ride-hailing startup in Brazil.
+
+CONTEXT ABOUT RHINO:
+- Armored vehicle ride-hailing service in Brazil
+- Key concerns: competition (Uber, 99, inDrive), regulation, safety/security, autonomous vehicles, EV adoption, LatAm market dynamics
+
+Below are today's top articles with their summaries.
+
+Write a brief (3-8 sentences) in Russian answering:
+1. Есть ли сегодня что-то, на что ОБЯЗАТЕЛЬНО нужно обратить внимание? (запуски конкурентов, регуляторные изменения, крупные сделки)
+2. Как сегодняшние новости влияют на рынок ride-hailing и позиционирование Rhino?
+3. Есть ли угрозы или возможности для Rhino?
+
+If nothing noteworthy today, say so briefly. Don't pad with generic statements.
+
+ARTICLES:
+{articles_text}
+
+Write the brief:"""
+
 # ── Provider configurations ──────────────────────────────────────────
 
 PROVIDERS = {
@@ -64,7 +84,7 @@ PROVIDERS = {
     "gemini": {
         "base_url": "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
         "default_model": "gemini-2.0-flash-lite",
-        "auth_header": "key",  # query param
+        "auth_header": "key",
     },
 }
 
@@ -75,20 +95,19 @@ class LLMSummarizer:
         self.api_key = api_key
         self.model = model or PROVIDERS[provider]["default_model"]
 
-    async def _call_llm(self, prompt: str) -> str:
+    async def _call_llm(self, prompt: str, system: str = SYSTEM_PROMPT) -> str:
         """Call the LLM and return the text response."""
         async with httpx.AsyncClient(timeout=60) as client:
             if self.provider == "groq":
-                return await self._call_openai_compatible(client, prompt)
+                return await self._call_openai_compatible(client, prompt, system)
             elif self.provider == "anthropic":
-                return await self._call_anthropic(client, prompt)
+                return await self._call_anthropic(client, prompt, system)
             elif self.provider == "gemini":
-                return await self._call_gemini(client, prompt)
+                return await self._call_gemini(client, prompt, system)
             else:
                 raise ValueError(f"Unknown provider: {self.provider}")
 
-    async def _call_openai_compatible(self, client: httpx.AsyncClient, prompt: str) -> str:
-        """Groq and other OpenAI-compatible APIs."""
+    async def _call_openai_compatible(self, client: httpx.AsyncClient, prompt: str, system: str) -> str:
         cfg = PROVIDERS[self.provider]
         resp = await client.post(
             cfg["base_url"],
@@ -99,7 +118,7 @@ class LLMSummarizer:
             json={
                 "model": self.model,
                 "messages": [
-                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "system", "content": system},
                     {"role": "user", "content": prompt},
                 ],
                 "max_tokens": 3000,
@@ -110,7 +129,7 @@ class LLMSummarizer:
         data = resp.json()
         return data["choices"][0]["message"]["content"]
 
-    async def _call_anthropic(self, client: httpx.AsyncClient, prompt: str) -> str:
+    async def _call_anthropic(self, client: httpx.AsyncClient, prompt: str, system: str) -> str:
         resp = await client.post(
             PROVIDERS["anthropic"]["base_url"],
             headers={
@@ -121,7 +140,7 @@ class LLMSummarizer:
             json={
                 "model": self.model,
                 "max_tokens": 3000,
-                "system": SYSTEM_PROMPT,
+                "system": system,
                 "messages": [{"role": "user", "content": prompt}],
             },
         )
@@ -129,14 +148,14 @@ class LLMSummarizer:
         data = resp.json()
         return data["content"][0]["text"]
 
-    async def _call_gemini(self, client: httpx.AsyncClient, prompt: str) -> str:
+    async def _call_gemini(self, client: httpx.AsyncClient, prompt: str, system: str) -> str:
         url = PROVIDERS["gemini"]["base_url"].format(model=self.model)
         resp = await client.post(
             url,
             params={"key": self.api_key},
             headers={"Content-Type": "application/json"},
             json={
-                "system_instruction": {"parts": [{"text": SYSTEM_PROMPT}]},
+                "system_instruction": {"parts": [{"text": system}]},
                 "contents": [{"parts": [{"text": prompt}]}],
                 "generationConfig": {"temperature": 0.2, "maxOutputTokens": 3000},
             },
@@ -186,13 +205,11 @@ class LLMSummarizer:
             prompt = self._build_batch_prompt(batch)
             batch_num += 1
 
-            # Always wait between batches (Groq free = 30 RPM)
             if batch_num > 1:
                 await asyncio.sleep(2)
 
             log.info(f"LLM batch {batch_num}/{total_batches}...")
 
-            # Retry up to 3 times on rate limit
             success = False
             for attempt in range(3):
                 try:
@@ -208,7 +225,7 @@ class LLMSummarizer:
                             if batch[idx]["relevance_score"] >= min_score:
                                 all_scored.append(batch[idx])
 
-                    break  # success, exit retry loop
+                    break
 
                 except httpx.HTTPStatusError as e:
                     if e.response.status_code == 429:
@@ -223,12 +240,5 @@ class LLMSummarizer:
                     break
 
             if not success:
-                # Fallback: use keyword scores for this batch
                 for art in batch:
-                    art["relevance_score"] = art.get("keyword_score", 0)
-                    if art["relevance_score"] >= min_score:
-                        all_scored.append(art)
-
-        # Sort by relevance, take top N
-        all_scored.sort(key=lambda a: a["relevance_score"], reverse=True)
-        return all_scored[:max_articles]
+                    art["relevance_score"] = ar
