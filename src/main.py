@@ -27,11 +27,10 @@ log = logging.getLogger(__name__)
 
 
 def load_config() -> dict:
-    """Load settings from environment variables with sensible defaults."""
     return {
         "telegram_token": os.environ["TELEGRAM_BOT_TOKEN"],
         "telegram_chat_ids": os.environ["TELEGRAM_CHAT_IDS"].split(","),
-        "llm_provider": os.getenv("LLM_PROVIDER", "groq"),        # groq | anthropic | gemini
+        "llm_provider": os.getenv("LLM_PROVIDER", "groq"),
         "llm_api_key": os.getenv("LLM_API_KEY", ""),
         "llm_model": os.getenv("LLM_MODEL", "llama-3.3-70b-versatile"),
         "max_articles_in_digest": int(os.getenv("MAX_ARTICLES", "15")),
@@ -62,36 +61,38 @@ async def run():
         log.info("No new articles. Exiting.")
         return
 
-    # 3. Keyword pre-filter (free, fast — removes obvious noise)
+    # 3. Keyword pre-filter
     kw_filter = KeywordFilter()
     articles = kw_filter.filter(articles)
-    # Sort by keyword score so best articles go to LLM first
     articles.sort(key=lambda a: a.get("keyword_score", 0), reverse=True)
     log.info(f"   {len(articles)} after keyword pre-filter")
 
     # 4. LLM relevance scoring & summarization
+    summarizer = None
     if cfg["llm_api_key"]:
         summarizer = LLMSummarizer(
             provider=cfg["llm_provider"],
             api_key=cfg["llm_api_key"],
             model=cfg["llm_model"],
         )
-        articles = await summarizer.score_and_summarize(
+        scored = await summarizer.score_and_summarize(
             articles,
             min_score=cfg["min_relevance_score"],
             max_articles=cfg["max_articles_in_digest"],
         )
+        articles = scored or []
         log.info(f"   {len(articles)} after LLM scoring (≥{cfg['min_relevance_score']})")
     else:
         log.warning("No LLM_API_KEY set — using keyword scores only")
         articles.sort(key=lambda a: a.get("keyword_score", 0), reverse=True)
         articles = articles[: cfg["max_articles_in_digest"]]
 
-    if not articles:
-        log.info("No relevant articles today.")
-
-    # 5. Format
-    digest_messages = format_digest(articles)
+    # 5. Generate daily brief + format articles
+    if summarizer and articles:
+        brief = await summarizer.generate_daily_brief(articles)
+        digest_messages = [brief] + format_digest(articles)
+    else:
+        digest_messages = format_digest(articles)
 
     # 6. Send
     sender = TelegramSender(cfg["telegram_token"])
