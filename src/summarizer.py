@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 
 BATCH_SIZE = 10  # Articles per LLM call
 
-SYSTEM_PROMPT = """You are a news analyst for Rhino, an armored ride-hailing startup in Brazil.
+SYSTEM_PROMPT = """You are a news analyst for Rhino, an armored ride-hailing startup in Brazil. You want them to success and at the very least sell the company at the unicorn level.
 
 Your job: evaluate each article's relevance and write a short summary for the founders' daily digest.
 
