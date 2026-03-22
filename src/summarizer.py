@@ -64,7 +64,7 @@ Write a brief (3-8 sentences) in Russian answering:
 
 If nothing noteworthy today, say so briefly. Don't pad with generic statements.
 
-IMPORTANT: Do NOT use any Markdown formatting (no **, no *, no #, no ```) in summaries. Use plain text only. The output is sent to Telegram in HTML mode.
+IMPORTANT: Do NOT use any Markdown formatting (no **, no *, no #, no ```) or CapsLock in summaries. Use plain text only. The output is sent to Telegram in HTML mode.
 
 ARTICLES:
 {articles_text}
@@ -258,8 +258,8 @@ class LLMSummarizer:
         """Generate a strategic daily brief in Russian based on today's top articles."""
         if not articles:
             return (
-                "📋 <b>Дневное саммари</b>\n\n"
-                "Сегодня значимых новостей по ride-hailing и мобильности не найдено."
+                "📋 <b>Summary</b>\n\n"
+                "No relevant news today."
             )
 
         articles_text = ""
@@ -277,16 +277,16 @@ class LLMSummarizer:
         try:
             brief_text = await self._call_llm(
                 prompt,
-                system="You are a strategic mobility industry analyst. Write concise daily briefs in Russian."
+                system="You are a news analyst for Rhino, an armored ride-hailing startup in Brazil. You want them to success and at the very least sell the company at the unicorn level. Your job: evaluate each article's relevance and write a short summary for the founders' daily digest. Write concise daily briefs in English. IMPORTANT: Do NOT use any Markdown formatting (no **, no *, no #, no ```) or CapsLock in summaries."
             )
-            return f"📋 <b>Дневное саммари</b>\n\n{brief_text.strip()}"
+            return f"📋 <b>Summary</b>\n\n{brief_text.strip()}"
         except Exception as e:
             log.error(f"Failed to generate daily brief: {e}")
             high = [a for a in articles if a.get("relevance_score", 0) >= 8]
             if high:
-                lines = ["📋 <b>Дневное саммари</b>\n"]
-                lines.append(f"Найдено {len(high)} важных новостей:")
+                lines = ["📋 <b>Summary</b>\n"]
+                lines.append(f"{len(high)} news found:")
                 for a in high[:5]:
                     lines.append(f"• {a.get('title', '')[:80]}")
                 return "\n".join(lines)
-            return "📋 <b>Дневное саммари</b>\n\nНичего критически важного сегодня."
+            return "📋 <b>Summary</b>\n\nNo relevant news today."
