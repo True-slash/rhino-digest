@@ -217,7 +217,9 @@ class LLMSummarizer:
             for attempt in range(3):
                 try:
                     response_text = await self._call_llm(prompt)
+                    log.info(f"LLM response preview: {response_text[:200]}")
                     results = self._parse_llm_response(response_text)
+                    log.info(f"Parsed {len(results)} results, scores: {[r.get('relevance', '?') for r in results[:5]]}")
                     success = True
 
                     for result in results:
