@@ -12,28 +12,28 @@ TELEGRAM_MAX_LENGTH = 4096
 
 # Category labels based on keywords in title/snippet
 CATEGORIES = {
-    "🚗 Ride-hailing": [
+    "Ride-hailing": [
         "uber", "lyft", "didi", "grab", "bolt", "indrive", "99",
         "cabify", "ride-hailing", "ride-sharing", "rideshare",
         "táxi", "taxi app",
     ],
-    "🤖 Autonomous & EVs": [
+    "Autonomous & EVs": [
         "robotaxi", "autonomous", "self-driving", "waymo", "cruise",
         "electric vehicle", "ev fleet", "veículo elétrico", "autônomo",
     ],
-    "🛡️ Safety & Security": [
+    "Safety & Security": [
         "armored", "blindado", "segurança", "safety", "security",
         "crime", "violence", "assalto",
     ],
-    "📜 Regulation": [
+    "Regulation": [
         "regulation", "regulação", "regulamentação", "legislation",
         "law", "lei", "antt", "policy", "política",
     ],
-    "💰 Funding & Finance": [
+    "Funding & Finance": [
         "funding", "investimento", "venture capital", "series",
         "ipo", "valuation", "acquisition", "aquisição", "rodada",
     ],
-    "🇧🇷 Brazil": [
+    "Brazil": [
         "brasil", "brazil", "são paulo", "rio de janeiro",
         "latam", "latin america", "américa latina",
     ],
@@ -76,7 +76,7 @@ def format_digest(articles: list[dict]) -> list[str]:
 
     if not articles:
         return [
-            f"📰 <b>Rhino Daily Digest — {today}</b>\n\n"
+            f"<b>Rhino Digest — {today}</b>\n\n"
             "No relevant news today."
         ]
 
@@ -88,9 +88,9 @@ def format_digest(articles: list[dict]) -> list[str]:
 
     # Build message body
     header = (
-        f"📰 <b>Rhino Daily Digest — {today}</b>\n"
-        f"📊 {len(articles)} stories curated for you\n"
-        "━━━━━━━━━━━━━━━━━━━━\n"
+        f"<b>Rhino Daily Digest — {today}</b>\n"
+        f"{len(articles)} articles\n"
+        "━━━━━━━━━━━━━━━━━━━\n"
     )
 
     body_parts = []
