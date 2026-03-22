@@ -77,7 +77,7 @@ def format_digest(articles: list[dict]) -> list[str]:
     if not articles:
         return [
             f"📰 <b>Rhino Daily Digest — {today}</b>\n\n"
-            "No highly relevant stories today. Enjoy your coffee! ☕"
+            "No relevant news today."
         ]
 
     # Group articles by category
@@ -115,7 +115,7 @@ def format_digest(articles: list[dict]) -> list[str]:
 
         body_parts.append(section)
 
-    footer = "\n━━━━━━━━━━━━━━━━━━━━\n🦏 <i>Powered by Rhino News Bot</i>"
+    footer = ""
 
     # Split into messages under 4096 chars
     messages = []
