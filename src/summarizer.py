@@ -246,4 +246,47 @@ class LLMSummarizer:
 
             if not success:
                 for art in batch:
-                    art["relevance_score"] = ar
+                    art["relevance_score"] = art.get("keyword_score", 0)
+                    if art["relevance_score"] >= min_score:
+                        all_scored.append(art)
+
+        # Sort by relevance, take top N
+        all_scored.sort(key=lambda a: a["relevance_score"], reverse=True)
+        return all_scored[:max_articles * 2]
+
+    async def generate_daily_brief(self, articles: list[dict]) -> str:
+        """Generate a strategic daily brief in Russian based on today's top articles."""
+        if not articles:
+            return (
+                "📋 <b>Дневное саммари</b>\n\n"
+                "Сегодня значимых новостей по ride-hailing и мобильности не найдено."
+            )
+
+        articles_text = ""
+        for i, art in enumerate(articles[:15]):
+            score = art.get("relevance_score", 0)
+            summary = art.get("summary", "")
+            articles_text += (
+                f"{i+1}. [{score}/10] {art.get('title', '')}\n"
+                f"   Summary: {summary}\n"
+                f"   Source: {art.get('source', '')}\n\n"
+            )
+
+        prompt = DAILY_BRIEF_PROMPT.format(articles_text=articles_text)
+
+        try:
+            brief_text = await self._call_llm(
+                prompt,
+                system="You are a strategic mobility industry analyst. Write concise daily briefs in Russian."
+            )
+            return f"📋 <b>Дневное саммари</b>\n\n{brief_text.strip()}"
+        except Exception as e:
+            log.error(f"Failed to generate daily brief: {e}")
+            high = [a for a in articles if a.get("relevance_score", 0) >= 8]
+            if high:
+                lines = ["📋 <b>Дневное саммари</b>\n"]
+                lines.append(f"Найдено {len(high)} важных новостей:")
+                for a in high[:5]:
+                    lines.append(f"• {a.get('title', '')[:80]}")
+                return "\n".join(lines)
+            return "📋 <b>Дневное саммари</b>\n\nНичего критически важного сегодня."
