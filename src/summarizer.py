@@ -267,7 +267,7 @@ class LLMSummarizer:
         return all_scored[:max_articles * 2]
 
     async def generate_daily_brief(self, articles: list[dict]) -> str:
-        """Generate a strategic daily brief in Russian based on today's top articles."""
+        """Generate a strategic daily brief in English based on today's top articles."""
         if not articles:
             return (
                 "📋 <b>Summary</b>\n\n"
