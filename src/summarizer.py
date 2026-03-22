@@ -57,12 +57,24 @@ CONTEXT ABOUT RHINO:
 
 Below are today's top articles with their summaries.
 
-Write a super concise summary in English answering:
-1. Is there anything we should definitely pay attention to today? (competitor launches, regulatory changes, major deals)
-2. How does today's news impact the ride-hailing market and Rhino's positioning?
-3. Are there any threats or opportunities for Rhino?
+Write a super concise summary in English using EXACTLY this structure:
 
-If nothing noteworthy today, say so briefly. Don't pad with generic statements.
+Key Attention Items:
+(1-2 sentences on what demands immediate attention today — competitor launches, regulatory changes, major deals. If nothing urgent, say so.)
+
+Market Impact:
+(2-3 sentences on how today's news affects the ride-hailing market and trends relevant to Rhino.)
+
+Threats:
+(1-2 sentences on competitive threats or risks from today's news.)
+
+Opportunities:
+(1-2 sentences on opportunities Rhino could leverage.)
+
+Bottom Line:
+(1 sentence executive summary.)
+
+If nothing noteworthy today, keep each section to one short sentence. Don't pad with generic statements.
 
 IMPORTANT: Do NOT use any Markdown formatting (no **, no *, no #, no ```) or CAPSLOCK in summaries. Use plain text only. The output is sent to Telegram in HTML mode.
 
