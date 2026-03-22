@@ -64,7 +64,7 @@ Write a super concise summary in English answering:
 
 If nothing noteworthy today, say so briefly. Don't pad with generic statements.
 
-IMPORTANT: Do NOT use any Markdown formatting (no **, no *, no #, no ```) or CapsLock in summaries. Use plain text only. The output is sent to Telegram in HTML mode.
+IMPORTANT: Do NOT use any Markdown formatting (no **, no *, no #, no ```) or CAPSLOCK in summaries. Use plain text only. The output is sent to Telegram in HTML mode.
 
 ARTICLES:
 {articles_text}
@@ -277,7 +277,7 @@ class LLMSummarizer:
         try:
             brief_text = await self._call_llm(
                 prompt,
-                system="You are a news analyst for Rhino, an armored ride-hailing startup in Brazil. You want them to success and at the very least sell the company at the unicorn level. Your job: evaluate each article's relevance and write a short summary for the founders' daily digest. Write concise daily briefs in English. IMPORTANT: Do NOT use any Markdown formatting (no **, no *, no #, no ```) or CapsLock in summaries."
+                system="You are a news analyst for Rhino, an armored ride-hailing startup in Brazil. You want them to success and at the very least sell the company at the unicorn level. Your job: evaluate each article's relevance and write a short concise summary for the founders' daily digest in English. IMPORTANT: Do NOT use any Markdown formatting (no **, no *, no #, no ```) or CAPSLOCK in summaries."
             )
             return f"📋 <b>Summary</b>\n\n{brief_text.strip()}"
         except Exception as e:
