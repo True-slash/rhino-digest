@@ -60,16 +60,16 @@ Below are today's top articles with their summaries.
 Write a super concise summary in English using EXACTLY this structure:
 
 Key Attention Items:
-(1-2 sentences on what demands immediate attention today — competitor launches, regulatory changes, major deals. If nothing urgent, say so.)
+(1 sentence on what demands immediate attention today — competitor launches, regulatory changes, major deals. If nothing urgent, say so.)
 
 Market Impact:
-(2-3 sentences on how today's news affects the ride-hailing market and trends relevant to Rhino.)
+(1 sentence on how today's news affects the ride-hailing market and trends relevant to Rhino.)
 
 Threats:
-(1-2 sentences on competitive threats or risks from today's news.)
+(1 sentence on competitive threats or risks from today's news.)
 
 Opportunities:
-(1-2 sentences on opportunities Rhino could leverage.)
+(1 sentence on opportunities Rhino could leverage.)
 
 Bottom Line:
 (1 sentence executive summary.)
