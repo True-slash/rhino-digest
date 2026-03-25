@@ -86,10 +86,12 @@ def format_digest(articles: list[dict]) -> list[str]:
         cat = _categorize(art)
         grouped.setdefault(cat, []).append(art)
 
+    article_count = sum(min(len(arts), 2) for arts in grouped.values())
+    
     # Build message body
     header = (
         f"<b>Rhino Daily Digest — {today}</b>\n"
-        f"{len(articles)} articles\n"
+        f"{article_count} articles\n"
         "━━━━━━━━━━━━━━━━━━━\n"
     )
 
