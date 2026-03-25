@@ -86,7 +86,7 @@ def format_digest(articles: list[dict]) -> list[str]:
         cat = _categorize(art)
         grouped.setdefault(cat, []).append(art)
 
-    article_count = sum(min(len(arts), 2) for arts in grouped.values())
+    article_count = sum(min(len(arts), 3) for arts in grouped.values())
     
     # Build message body
     header = (
@@ -100,7 +100,7 @@ def format_digest(articles: list[dict]) -> list[str]:
 
     for category, arts in grouped.items():
         section = f"\n{category}\n\n"
-        for art in arts[:2]:
+        for art in arts[:3]:
             title = _escape_html(art.get("title", "Untitled"))
             url = _escape_url(art.get("url", ""))
             summary = art.get("summary", "")
