@@ -57,18 +57,14 @@ CONTEXT ABOUT RHINO:
 
 Below are today's top articles with their summaries.
 
-Write a super concise summary in English using EXACTLY this structure:
+Write exactly 1-2 sentences in English summarizing what matters most for founders of Rhino (executive summary). No headers, no structure, no bullet points. Just 1-2 plain short sentences.
 
-1 sentence executive summary.
+If nothing noteworthy today, don't pad with generic statements.
 
-If nothing noteworthy today, keep each section to one short sentence. Don't pad with generic statements.
-
-IMPORTANT: Do NOT use any Markdown formatting (no **, no *, no #, no ```) or CAPSLOCK in summaries. Use plain text only. The output is sent to Telegram in HTML mode.
+IMPORTANT: Do NOT use any Markdown formatting (no **, no *, no #, no ```) or CAPSLOCK. Use plain text only. The output is sent to Telegram in HTML mode.
 
 ARTICLES:
-{articles_text}
-
-Write the brief:"""
+{articles_text}"""
 
 # ── Provider configurations ──────────────────────────────────────────
 
