@@ -21,7 +21,7 @@ CATEGORIES = {
         "robotaxi", "autonomous", "self-driving", "waymo", "cruise",
         "electric vehicle", "ev fleet", "veículo elétrico", "autônomo",
     ],
-    "Safety & Security": [
+    "Safety": [
         "armored", "blindado", "segurança", "safety", "security",
         "crime", "violence", "assalto",
     ],
@@ -29,7 +29,7 @@ CATEGORIES = {
         "regulation", "regulação", "regulamentação", "legislation",
         "law", "lei", "antt", "policy", "política",
     ],
-    "Funding & Finance": [
+    "Finance": [
         "funding", "investimento", "venture capital", "series",
         "ipo", "valuation", "acquisition", "aquisição", "rodada",
     ],
@@ -49,7 +49,7 @@ def _categorize(article: dict) -> str:
             if kw in text:
                 return category
 
-    return "Industry"
+    return "Other"
 
 
 def _escape_html(text: str) -> str:
