@@ -49,7 +49,7 @@ def _categorize(article: dict) -> str:
             if kw in text:
                 return category
 
-    return "📰 Industry"
+    return "Industry"
 
 
 def _escape_html(text: str) -> str:
