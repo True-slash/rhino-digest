@@ -253,7 +253,7 @@ class LLMSummarizer:
         """Generate a strategic daily brief in English based on today's top articles."""
         if not articles:
             return (
-                "📋 <b>Summary</b>\n\n"
+                "<b>Summary</b>\n\n"
                 "No relevant news today."
             )
 
@@ -274,14 +274,14 @@ class LLMSummarizer:
                 prompt,
                 system="You are a news analyst for Rhino, an armored ride-hailing startup in Brazil. You want them to success and at the very least sell the company at the unicorn level. Your job: evaluate each article's relevance and write a short concise summary for the founders' daily digest in English. IMPORTANT: Do NOT use any Markdown formatting (no **, no *, no #, no ```) or CAPSLOCK in summaries."
             )
-            return f"📋 <b>Summary</b>\n\n{brief_text.strip()}"
+            return f"<b>Summary</b>\n\n{brief_text.strip()}"
         except Exception as e:
             log.error(f"Failed to generate daily brief: {e}")
             high = [a for a in articles if a.get("relevance_score", 0) >= 8]
             if high:
-                lines = ["📋 <b>Summary</b>\n"]
+                lines = ["<b>Summary</b>\n"]
                 lines.append(f"{len(high)} news found:")
                 for a in high[:5]:
                     lines.append(f"• {a.get('title', '')[:80]}")
                 return "\n".join(lines)
-            return "📋 <b>Summary</b>\n\nNo relevant news today."
+            return "<b>Summary</b>\n\nNo relevant news today."
