@@ -110,7 +110,7 @@ def format_digest(articles: list[dict]) -> list[str]:
             line = f'{article_num}. <a href="{url}"><b>{title}</b></a>\n'
             if summary:
                 line += f"<i>{_escape_html(summary)}</i>\n"
-            line += f"<code>{source}</code> · relevance: {score}/10\n"
+            line += f"Relevance: {score}/10\n"
 
             section += line + "\n"
             article_num += 1
