@@ -14,7 +14,7 @@ from pathlib import Path
 log = logging.getLogger(__name__)
 
 RETENTION_DAYS = 30
-TITLE_SIMILARITY_THRESHOLD = 0.65
+TITLE_SIMILARITY_THRESHOLD = 0.50
 
 
 def _clean_title(title: str) -> str:
