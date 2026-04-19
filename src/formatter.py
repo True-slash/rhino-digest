@@ -33,9 +33,18 @@ CATEGORIES = {
         "funding", "investimento", "venture capital", "series",
         "ipo", "valuation", "acquisition", "aquisição", "rodada",
     ],
-    "Brazil": [
+    "Latam": [
         "brasil", "brazil", "são paulo", "rio de janeiro",
+        "argentina", "mexico", "colombia", "buenos aires", "mexico city", "bogota",
         "latam", "latin america", "américa latina",
+    ],
+    "Mena": [
+        "turkey", "türkiye", "egypt",
+        "istanbul", "cairo", "alexandria",
+    ],
+    "Asia": [
+        "india", "indonesia",
+        "mumbai", "new delhi", "jakarta",
     ],
 }
 
