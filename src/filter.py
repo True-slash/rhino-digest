@@ -27,6 +27,7 @@ MEDIUM_KEYWORDS = [
     "gettransfer", "rapido", "revel", "armis mobi", "bunker driver", 
     "vou de blindados rj", "localiza", "movida", "wammo", "turbi",
     "venture capital", "VC", "série a", "series a", "funding", "fundraising",
+    "bitaksi", "marti", "careem", "gojek",
 ]
 
 # Weight 1: Broader relevant topics
@@ -39,7 +40,7 @@ LOW_KEYWORDS = [
     "regulação", "regulation", "antt", "denatran",
     "fintech", "pagamento digital", "digital payment",
     "são paulo", "rio de janeiro", "brasil", "brazil", "latin america",
-    "américa latina", "latam",
+    "américa latina", "latam", "turkey", "türkiye", "egypt", "argentina", "india", "indonesia", "mexico", "colombia",
 ]
 
 # Negative keywords — articles matching these are likely noise
