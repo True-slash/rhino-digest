@@ -27,7 +27,7 @@ MEDIUM_KEYWORDS = [
     "gettransfer", "rapido", "revel", "armis mobi", "bunker driver", 
     "vou de blindados rj", "localiza", "movida", "wammo", "turbi",
     "venture capital", "VC", "série a", "series a", "funding", "fundraising",
-    "bitaksi", "marti", "careem", "gojek",
+    "bitaksi", "marti", "careem", "gojek", "ousta", "sixt", "blusmart", "meru", "savaari", "jugnoo", "bluebird", "xanh", "limogreen", "blablacar", "vemo", "beat", "libres", "picap",
 ]
 
 # Weight 1: Broader relevant topics
