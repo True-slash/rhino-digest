@@ -42,7 +42,7 @@ GOOGLE_NEWS_FEEDS = {
     # Portuguese — Brazil mobility, startups, fintech
     "Mobilidade BR": (
         "https://news.google.com/rss/search?"
-        "q=Uber+OR+99+OR+inDrive+OR+mobilidade+OR+mobilidade+urbana+OR+transporte+por+aplicativo"
+        "q=Uber+OR+99+OR+inDrive+OR+mobilidade+OR+mobilidade+urbana+OR+transporte+por+aplicativo+OR+taxi+Brazil"
         "+when:24h&hl=pt-BR&gl=BR&ceid=BR:pt-419"
     ),
     "Startups BR": (
@@ -59,6 +59,42 @@ GOOGLE_NEWS_FEEDS = {
         "https://news.google.com/rss/search?"
         "q=regulação+transporte+aplicativo+OR+táxi+regulamentação+Brasil"
         "+when:24h&hl=pt-BR&gl=BR&ceid=BR:pt-419"
+    ),
+    # Other markets
+    "Turkey mobility": (
+        "https://news.google.com/rss/search?"
+        "q=Uber+OR+BiTaksi+OR+Marti+OR+InDrive+OR+Blacklane+OR+ride-hailing+OR+taxi+regulation+Turkey+OR+taxi+Turkey"
+        "+when:24h&hl=en&gl=TR&ceid=TR:en"
+    ),
+    "Egypt mobility": (
+        "https://news.google.com/rss/search?"
+        "q=Uber+OR+Careem+OR+InDrive+OR+Ousta+OR+SIXT+OR+ride-hailing+OR+taxi+regulation+Egypt+OR+taxi+Egypt"
+        "+when:24h&hl=en&gl=EG&ceid=EG:en"
+    ),
+    "Argentina mobility": (
+        "https://news.google.com/rss/search?"
+        "q=Uber+OR+Cabify+OR+DiDi+OR+BA+OR+ride-hailing+OR+transporte+aplicativo+Argentina+OR+taxi+regulation+Argentina+OR+taxi+Argentina"
+        "+when:24h&hl=es-419&gl=AR&ceid=AR:es-419"
+    ),
+    "India mobility": (
+        "https://news.google.com/rss/search?"
+        "q=Uber+OR+Ola+OR+Rapido+OR+BluSmart+OR+InDrive+OR+Meru+OR+Savaari+OR+Jugnoo+OR+ride-hailing+OR+taxi+regulation+India+OR+taxi+India"
+        "+when:24h&hl=en&gl=IN&ceid=IN:en"
+    ),
+    "Indonesia mobility": (
+        "https://news.google.com/rss/search?"
+        "q=Grab+OR+Gojek+OR+InDrive+OR+BlueBird+OR+Xanh+OR+LimoGreen+OR+ride-hailing+OR+taxi+regulation+Indonesia+OR+taxi+Indonesia"
+        "+when:24h&hl=en&gl=ID&ceid=ID:en"
+    ),
+    "Mexico mobility": (
+        "https://news.google.com/rss/search?"
+        "q=Uber+OR+DiDi+OR+Cabify+OR+InDrive+OR+Mi+OR+Easy+OR+BlaBlaCar+OR+VEMO+OR+ride-hailing+OR+transporte+aplicativo+Mexico+OR+taxi+regulation+Mexico+OR+taxi+Mexico"
+        "+when:24h&hl=es-419&gl=MX&ceid=MX:es-419"
+    ),
+    "Colombia mobility": (
+        "https://news.google.com/rss/search?"
+        "q=Uber+OR+DiDi+OR+Cabify+OR+Beat+OR+Libres+OR+Picap+OR+InDrive+OR+ride-hailing+OR+transporte+aplicativo+Colombia+OR+taxi+regulation+Colombia+OR+taxi+Colombia"
+        "+when:24h&hl=es-419&gl=CO&ceid=CO:es-419"
     ),
 }
 
